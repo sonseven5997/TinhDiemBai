@@ -1,20 +1,13 @@
-import {
-  Text,
-  View,
-  Dimensions,
-  ScrollView,
-  FlatList,
-  TextInput,
-} from 'react-native';
+import {Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {Button, Icon} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import {Table, Row} from 'react-native-table-component';
 import {PlayerScore} from '../components/playerScore/index.js';
+import {StyleSheet} from 'react-native';
 
 export default DetailScreen = ({route}) => {
   const players = route.params.players;
-  console.log(players);
   const [tempScore, setTempScore] = useState([]);
   const [score, setScore] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,48 +22,35 @@ export default DetailScreen = ({route}) => {
     return sum;
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#303030',
-      }}>
-      {/* <Text style={{color:'#FFFFFF'}}>This is detail screen</Text> */}
+    <View style={styles.container}>
       <Table>
         <Row
-          style={{borderBottomWidth:5, borderBottomColor: color[0]}}
+          style={{...styles.headerRow, borderBottomColor: color[0]}}
           data={players.map((e) => e.name)}
-          textStyle={{color: '#FFFFFF', textAlign: 'center', fontSize: 20}}
+          textStyle={styles.headerText}
         />
         {score.map((e, i) => {
           return (
             <Row
               key={i.toString()}
               data={e}
-              style={{borderBottomWidth:1, borderBottomColor:'#FFFFFF'}}
-              textStyle={{color: '#FFFFFF', textAlign: 'center', fontSize: 15}}
+              style={styles.contentRow}
+              textStyle={styles.contentText}
             />
           );
         })}
       </Table>
       <Modal
         isVisible={modalVisible}
-        style={{flex: 1, backgroundColor: '#424242'}}
+        style={styles.modalContainer}
         onBackButtonPress={() => {
           setModalVisible(false);
         }}
         onBackdropPress={() => {
           setModalVisible(false);
         }}>
-        <View style={{flex: 1}}>
-          <Text
-            style={{
-              fontSize: 25,
-              color: '#FFFFFF',
-              marginBottom: 10,
-              marginLeft: 10,
-            }}>
-            Enter score for players
-          </Text>
+        <View style={styles.modalWrapper}>
+          <Text style={styles.modalTitle}>Ghi điểm ván chơi</Text>
           {players.map((e, i) => {
             return (
               <PlayerScore
@@ -84,7 +64,7 @@ export default DetailScreen = ({route}) => {
                   let scoreArr = [...tempScore];
                   scoreArr[i] = text;
                   setTempScore(scoreArr);
-                  console.log('score arr = ', scoreArr);
+                  console.log('score arr = ', tempScore);
                   setTotal(
                     scoreArr
                       .filter((e) => e !== undefined && e !== '' && e !== '-')
@@ -96,77 +76,54 @@ export default DetailScreen = ({route}) => {
             );
           })}
         </View>
-        <Text style={{color: '#FFFFFF'}}>Total: {total} </Text>
+        <Text style={styles.modalTotal}>Tổng: {total} </Text>
         <Button
           title="Save"
-          buttonStyle={{backgroundColor: '#FFCA28'}}
-          titleStyle={{color: '#000000'}}
+          buttonStyle={styles.modalBtn}
+          titleStyle={styles.modalBtnTitle}
           onPress={() => {
+            console.log('temp score = ',tempScore)
             if (total !== 0) {
-              alert('Total must be 0');
+              alert('Tổng phải bằng 0');
             } else {
-              let newScore = [...score];
-              newScore.unshift(tempScore);
-              setScore(newScore);
-              console.log(score);
-              setModalVisible(false);
-              setTempScore([]);
+              if (tempScore.filter((e) => (e == '')).length == 0 && tempScore.filter((e) => (e == undefined)).length == 0 && tempScore.length == players.length) {
+                let newScore = [...score];
+                newScore.unshift(tempScore);
+                setScore(newScore);
+                setModalVisible(false);
+                setTempScore([]);
+              } else {
+                alert('Hãy nhập điểm của tất cả người chơi')
+              }
             }
           }}
         />
       </Modal>
       <Modal
         isVisible={modalScoreVisible}
-        style={{flex: 1, backgroundColor: '#424242'}}
+        style={styles.modalContainer}
         onBackButtonPress={() => {
           setModalVisible(false);
         }}
         onBackdropPress={() => {
           setModalVisible(false);
         }}>
-        <View style={{flex: 1}}>
-          <Text
-            style={{
-              fontSize: 25,
-              color: '#FFFFFF',
-              marginBottom: 10,
-              marginLeft: 10,
-            }}>
-            Player score
-          </Text>
+        <View style={styles.modalWrapper}>
+          <Text style={styles.modalTitle}>Tổng kết</Text>
           {players.map((e, i) => {
             return (
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  marginBottom: 5,
-                  marginHorizontal: 10,
-                }}>
+              <View style={styles.playerWrapper} key={i.toString()}>
                 <View style={{flex: 1}}>
                   <Text
                     style={{
-                      textAlign: 'center',
-                      borderLeftWidth: 10,
+                      ...styles.playerName,
                       borderLeftColor: color[i % 4],
-                      flex: 1,
-                      justifyContent: 'center',
-                      fontSize: 25,
-                      color: '#FFFFFF',
                     }}>
                     {e.name}
                   </Text>
                 </View>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#FFFFFF',
-                      justifyContent: 'center',
-                      textAlign: 'center',
-                      color: '#FFFFFF',
-                      fontSize: 20,
-                    }}>
+                <View style={styles.modalWrapper}>
+                  <Text style={styles.playerScore}>
                     {renderScore(score, i)}
                   </Text>
                 </View>
@@ -176,43 +133,24 @@ export default DetailScreen = ({route}) => {
         </View>
         <Button
           title="OK"
-          buttonStyle={{backgroundColor: '#FFCA28'}}
-          titleStyle={{color: '#000000'}}
+          buttonStyle={styles.modalBtn}
+          titleStyle={styles.modalBtnTitle}
           onPress={() => {
-            setModalScoreVisible(false)
+            setModalScoreVisible(false);
           }}
         />
       </Modal>
-      <View
-        style={{
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          marginRight: 16,
-          marginBottom: 16,
-          flexDirection: 'row-reverse',
-        }}>
+      <View style={styles.btnWrapper}>
         <Button
-          buttonStyle={{
-            backgroundColor: '#ef5350',
-            width: 50,
-            height: 50,
-            borderRadius: 50,
-          }}
-          containerStyle={{marginLeft: 8}}
+          buttonStyle={styles.btnAdd}
+          containerStyle={styles.btnAddContainer}
           icon={<Icon name="add-outline" type="ionicon" color="#FFFFFF" />}
           onPress={() => {
             setModalVisible(true);
           }}
         />
         <Button
-          buttonStyle={{
-            backgroundColor: '#42A5F5',
-            width: 50,
-            height: 50,
-            borderRadius: 50,
-          }}
+          buttonStyle={styles.btnScore}
           icon={<Icon name="list-outline" type="ionicon" color="#FFFFFF" />}
           onPress={() => {
             console.log(score);
@@ -223,3 +161,69 @@ export default DetailScreen = ({route}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#303030',
+  },
+  headerRow: {borderBottomWidth: 5},
+  headerText: {color: '#FFFFFF', textAlign: 'center', fontSize: 20},
+  contentRow: {borderBottomWidth: 1, borderBottomColor: '#FFFFFF'},
+  contentText: {color: '#FFFFFF', textAlign: 'center', fontSize: 15},
+  modalContainer: {flex: 1, backgroundColor: '#424242'},
+  modalTitle: {
+    fontSize: 25,
+    color: '#FFFFFF',
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+  modalWrapper: {flex: 1},
+  modalTotal: {color: '#FFFFFF'},
+  modalBtn: {backgroundColor: '#FFCA28'},
+  modalBtnTitle: {color: '#000000'},
+  playerWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 5,
+    marginHorizontal: 10,
+  },
+  playerName: {
+    textAlign: 'center',
+    borderLeftWidth: 10,
+    flex: 1,
+    justifyContent: 'center',
+    fontSize: 25,
+    color: '#FFFFFF',
+  },
+  playerScore: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 20,
+  },
+  btnWrapper: {
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    marginRight: 16,
+    marginBottom: 16,
+    flexDirection: 'row-reverse',
+  },
+  btnAdd: {
+    backgroundColor: '#ef5350',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  btnAddContainer: {marginLeft: 8},
+  btnScore: {
+    backgroundColor: '#42A5F5',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+});
