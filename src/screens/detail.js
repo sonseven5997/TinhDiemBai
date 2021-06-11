@@ -82,18 +82,22 @@ export default DetailScreen = ({route}) => {
           buttonStyle={styles.modalBtn}
           titleStyle={styles.modalBtnTitle}
           onPress={() => {
-            console.log('temp score = ',tempScore)
+            console.log('temp score = ', tempScore);
             if (total !== 0) {
               alert('Tổng phải bằng 0');
             } else {
-              if (tempScore.filter((e) => (e == '')).length == 0 && tempScore.filter((e) => (e == undefined)).length == 0 && tempScore.length == players.length) {
+              if (
+                tempScore.filter((e) => e == '').length == 0 &&
+                tempScore.filter((e) => e == undefined).length == 0 &&
+                tempScore.length == players.length
+              ) {
                 let newScore = [...score];
                 newScore.unshift(tempScore);
                 setScore(newScore);
                 setModalVisible(false);
                 setTempScore([]);
               } else {
-                alert('Hãy nhập điểm của tất cả người chơi')
+                alert('Hãy nhập điểm của tất cả người chơi');
               }
             }
           }}
@@ -113,7 +117,7 @@ export default DetailScreen = ({route}) => {
           {players.map((e, i) => {
             return (
               <View style={styles.playerWrapper} key={i.toString()}>
-                <View style={{flex: 1}}>
+                <View style={styles.modalWrapper}>
                   <Text
                     style={{
                       ...styles.playerName,
@@ -185,13 +189,12 @@ const styles = StyleSheet.create({
   playerWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 5,
     marginHorizontal: 10,
+    marginBottom:10
   },
   playerName: {
     textAlign: 'center',
     borderLeftWidth: 10,
-    flex: 1,
     justifyContent: 'center',
     fontSize: 25,
     color: '#FFFFFF',
@@ -203,6 +206,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
     fontSize: 20,
+    flex: 1,
   },
   btnWrapper: {
     justifyContent: 'center',
