@@ -14,4 +14,4 @@ For android only
 </div>
 
 # Download
-<a src="https://drive.google.com/file/d/1thQw1aU9FZiDiAL85xCLDddStbhK_8fM/view?usp=sharing">APK file</a>
+<a href="https://drive.google.com/file/d/1thQw1aU9FZiDiAL85xCLDddStbhK_8fM/view?usp=sharing">APK file</a>
