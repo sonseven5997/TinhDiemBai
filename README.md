@@ -7,6 +7,8 @@ For android only
 <div>
 <img src="src/screenshots/Screenshot_1627014719.png" height="400px" />
 <img src="src/screenshots/Screenshot_1627014730.png" height="400px" />
+</div>
+<div>
 <img src="src/screenshots/Screenshot_1627014757.png" height="400px" />
 <img src="src/screenshots/Screenshot_1627014766.png" height="400px" />
 </div>
