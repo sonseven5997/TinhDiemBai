@@ -11,7 +11,7 @@ export const PlayerScore = (props) => {
           {props.name}
         </Text>
       </View>
-      <View style={{flex: 1}}>
+      <View style={styles.flex1}>
         <TextInput
           keyboardType="number-pad"
           value={props.score}
@@ -26,6 +26,7 @@ export const PlayerScore = (props) => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {flex:1},
   container: {
     display: 'flex',
     flexDirection: 'row',

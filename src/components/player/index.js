@@ -4,7 +4,7 @@ import React from 'react';
 export const Player = (props) => {
   return (
     <View style={styles.container}>
-      <Text style={{...styles.textWrapper, backgroundColor:props.color}}>
+      <Text style={{...styles.textWrapper, backgroundColor: props.color}}>
         {props.name !== undefined ? props.name.charAt(0).toUpperCase() : ''}
       </Text>
       <TextInput

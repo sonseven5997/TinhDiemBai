@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Icon, Button} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
-export default AddPlayerScreen = ({navigation}) => {
+const AddPlayerScreen = ({navigation}) => {
   const [quantity, setQuantity] = useState(0);
   return (
     <View style={styles.container}>
@@ -79,3 +79,5 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 });
+
+export default AddPlayerScreen

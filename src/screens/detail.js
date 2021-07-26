@@ -6,7 +6,7 @@ import {Table, Row} from 'react-native-table-component';
 import {PlayerScore} from '../components/playerScore/index.js';
 import {StyleSheet} from 'react-native';
 
-export default DetailScreen = ({route}) => {
+const DetailScreen = ({route}) => {
   const players = route.params.players;
   const [tempScore, setTempScore] = useState([]);
   const [score, setScore] = useState([]);
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginHorizontal: 10,
-    marginBottom:10
+    marginBottom: 10,
   },
   playerName: {
     textAlign: 'center',
@@ -231,3 +231,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+export default DetailScreen;
