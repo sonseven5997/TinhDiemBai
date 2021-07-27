@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import {Table, Row} from 'react-native-table-component';
 import {PlayerScore} from '../components/playerScore/index.js';
 import {StyleSheet} from 'react-native';
+import { SafeAreaView } from 'react-native';
 
 const DetailScreen = ({route}) => {
   const players = route.params.players;
@@ -49,7 +50,7 @@ const DetailScreen = ({route}) => {
         onBackdropPress={() => {
           setModalVisible(false);
         }}>
-        <View style={styles.modalWrapper}>
+        <SafeAreaView style={styles.modalWrapper}>
           <Text style={styles.modalTitle}>Ghi điểm ván chơi</Text>
           {players.map((e, i) => {
             return (
@@ -75,7 +76,7 @@ const DetailScreen = ({route}) => {
               />
             );
           })}
-        </View>
+        </SafeAreaView>
         <Text style={styles.modalTotal}>Tổng: {total} </Text>
         <Button
           title="Save"

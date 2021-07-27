@@ -14,6 +14,8 @@ export const PlayerScore = (props) => {
       <View style={styles.flex1}>
         <TextInput
           keyboardType="number-pad"
+          enablesReturnKeyAutomatically={true}
+          returnKeyType="done"
           value={props.score}
           onChangeText={props.onChange}
           placeholder="-"

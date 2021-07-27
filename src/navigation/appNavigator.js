@@ -39,5 +39,5 @@ export const AppNavigator = () => {
 
 const styles = StyleSheet.create({
   header: {backgroundColor: '#FFCA28'},
-  headerTitle: {color: '#303030', fontFamily: 'sans-serif', fontWeight: 'bold'},
+  headerTitle: {color: '#303030', fontFamily: 'OpenSans-Regular', fontWeight: 'bold'},
 });

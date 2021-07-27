@@ -12,6 +12,8 @@ const AddPlayerScreen = ({navigation}) => {
         <TextInput
           style={styles.quantityTextInput}
           keyboardType="number-pad"
+          enablesReturnKeyAutomatically={true}
+          returnKeyType="done"
           value={quantity.toString()}
           onChangeText={(text) => {
             setQuantity(text);
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   quantityWrapper: {justifyContent: 'center', alignItems: 'center', flex: 1},
   quantityText: {
     fontSize: 20,
-    fontFamily: 'sans-serif',
+    fontFamily: 'OpenSans-Regular',
     color: '#E5E5E5',
     textAlign: 'center',
   },
